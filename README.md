@@ -34,5 +34,3 @@ URL | Action
 http://localhost | Hits the reverse proxy default page
 http://localhost/app | Hits the *app* endpoint
 http://localhost/users | lists the users in the database
-
-# Voila!
