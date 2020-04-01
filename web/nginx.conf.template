@@ -4,9 +4,9 @@ server {
   index        index.html;
 
   location /app {
-    proxy_pass http://app:3000/app;
+    proxy_pass http://app:${APP_PORT}/app;
   }
   location /users {
-    proxy_pass http://app:3000/users;
+    proxy_pass http://app:${APP_PORT}/users;
   }
 }
