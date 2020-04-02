@@ -31,7 +31,7 @@ Start it
 
 URL | Action
 --- | ---
-http://localhost | Hits the reverse proxy default page
+http://localhost | Hits the nginx default page
 http://localhost/app | Hits the *app* endpoint
 http://localhost/users | Hits the *users* endpoint which lists the users in the database
 
