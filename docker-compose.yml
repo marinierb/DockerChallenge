@@ -29,6 +29,6 @@ services:
     container_name: web
     env_file: .env
     ports:
-      - "80:80"
+      - "${WEB_PORT}:${WEB_PORT}"
     depends_on:
       - app

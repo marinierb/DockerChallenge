@@ -1,5 +1,5 @@
 server {
-  listen 80;
+  listen ${WEB_PORT};
   root         /var/www/default;
   index        index.html;
 

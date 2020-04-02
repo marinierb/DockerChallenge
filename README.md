@@ -22,6 +22,7 @@ Create a **.env** file with the following variables. Adjust as required.
     POSTGRES_DB=docker
     POSTGRES_PORT=5432
     APP_PORT=3000
+    WEB_PORT=80
     
 Start it
 
