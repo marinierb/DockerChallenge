@@ -16,7 +16,6 @@ cd to it
 
 Create a **.env** file with the following variables. Adjust as required.
 
-    DB_HOST=db
     POSTGRES_USER=docker
     POSTGRES_PASSWORD=password
     POSTGRES_DB=docker

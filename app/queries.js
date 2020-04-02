@@ -4,7 +4,6 @@ const Pool = require('pg').Pool;
 
 console.log(
   '\nDatabase: ' +
-  '\n  host:     ' + process.env.DB_HOST +
   '\n  port:     ' + process.env.POSTGRES_PORT +
   '\n  database: ' + process.env.POSTGRES_DB +
   '\n  user:     ' + process.env.POSTGRES_USER
@@ -12,7 +11,7 @@ console.log(
 
 const pool = new Pool(
 {
-    host:     process.env.DB_HOST,
+    host:     'db',
     port:     process.env.POSTGRES_PORT,
     database: process.env.POSTGRES_DB,
     user:     process.env.POSTGRES_USER,
