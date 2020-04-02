@@ -1,5 +1,9 @@
 version: "3.7"
 
+volumes:
+  db_data:
+    name: db_data
+
 services:
 
   db:
@@ -8,7 +12,9 @@ services:
     env_file: .env
     expose:
       - "${POSTGRES_PORT}"
-    
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
   app:
     build: ./app
     container_name: app
