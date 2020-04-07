@@ -2,7 +2,6 @@ version: "3.7"
 
 volumes:
   db_data:
-    name: db_data
 
 services:
 
