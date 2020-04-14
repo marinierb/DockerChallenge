@@ -1,8 +1,5 @@
 version: "3.7"
 
-volumes:
-  db_data:
-
 services:
 
   db:
@@ -31,3 +28,6 @@ services:
       - "${WEB_PORT}:${WEB_PORT}"
     depends_on:
       - app
+
+volumes:
+  db_data:
