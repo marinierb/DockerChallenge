@@ -1,12 +1,14 @@
 server {
   listen ${WEB_PORT};
-  root         /var/www/default;
-  index        index.html;
+  root   /var/www/default;
+  index  index.html;
 
   location /app {
-    proxy_pass http://app:${APP_PORT}/app;
+    resolver 127.0.0.1 valid=30s;
+    proxy_pass http://${APP_HOST}:${APP_PORT}/app;
   }
   location /users {
-    proxy_pass http://app:${APP_PORT}/users;
+    resolver 127.0.0.1 valid=30s;
+    proxy_pass http://${APP_HOST}:${APP_PORT}/users;
   }
 }

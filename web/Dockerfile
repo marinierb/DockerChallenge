@@ -1,7 +1,8 @@
 FROM nginx:alpine
 COPY index.html /var/www/default/index.html
 COPY default.conf.template /etc/nginx/conf.d/default.conf.template
-CMD  envsubst '${APP_PORT} ${WEB_PORT}' \
+CMD  envsubst '${APP_HOST} ${APP_PORT} ${WEB_PORT}' \
               < /etc/nginx/conf.d/default.conf.template \
               > /etc/nginx/conf.d/default.conf \
-     && nginx -g 'daemon off;'
+      && cat /etc/nginx/conf.d/default.conf \
+      && nginx -g 'daemon off;'
