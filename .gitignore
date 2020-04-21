@@ -1,4 +1,5 @@
 .env
 t
-docker-compose.yml.new
 azure
+app/node_modules
+app/package-lock.json
