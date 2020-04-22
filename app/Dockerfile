@@ -1,4 +1,5 @@
-FROM    node:12-alpine
+ARG     node_image
+FROM    $node_image
 WORKDIR /app
 COPY    . /app
 RUN     npm install

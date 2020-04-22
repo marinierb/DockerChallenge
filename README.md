@@ -16,15 +16,21 @@ cd to it
 
 Create a **.env** file with the following variables. Adjust as required.
 
-    POSTGRES_VERSION=12.2-alpine
-    NODE_VERSION=13.12.0-alpine3.11
-    NGINX_VERSION=1.17.9-alpine
+    COMPONENT_NAME_PREFIX=bruno
+    COMPONENT_VERSION=v1.0.0
+    # db
+    POSTGRES_IMAGE=library/postgres:12.2-alpine
+    POSTGRES_HOST=db
     POSTGRES_USER=docker
     POSTGRES_PASSWORD=********
     POSTGRES_DB=docker
     POSTGRES_PORT=5432
+    # app
+    NODE_IMAGE=node:13.12.0-alpine3.11
     APP_HOST=app
     APP_PORT=3000
+    # web
+    NGINX_IMAGE=nginx:1.17.9-alpine
     WEB_PORT=80
     
 Start it

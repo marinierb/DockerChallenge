@@ -3,55 +3,44 @@ version: "3.7"
 services:
 
   db:
-    image: postgres:${POSTGRES_VERSION}
+    build:
+      context: ./db
+      args:
+        postgres_image: ${POSTGRES_IMAGE}
+    image: ${COMPONENT_NAME_PREFIX}_db:${COMPONENT_VERSION}
     container_name: ${COMPONENT_NAME_PREFIX}_db
     env_file: .env
-    volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks: 
-      - internal-network
     expose:
       - "${POSTGRES_PORT}"
-  
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
   app:
-    image: node:${NODE_VERSION}
+    build:
+      context: ./app
+      args:
+        node_image: ${NODE_IMAGE}
+    image: ${COMPONENT_NAME_PREFIX}_app:${COMPONENT_VERSION}
     container_name: ${COMPONENT_NAME_PREFIX}_app
     env_file: .env
-    working_dir: /home/node/app
-    volumes:
-    - ./app:/home/node/app
-    command: "npm start"
-    networks: 
-      - internal-network
     expose:
       - "${APP_PORT}"
     depends_on:
       - db
-      
+
   web:
-    image: nginx:${NGINX_VERSION}
+    build:
+      context: ./web
+      args:
+        nginx_image: ${NGINX_IMAGE}
+    image: ${COMPONENT_NAME_PREFIX}_web:${COMPONENT_VERSION}
     container_name: ${COMPONENT_NAME_PREFIX}_web
     env_file: .env
-    volumes:
-      - ./web/index.html:/var/www/default/index.html:ro
-      - ./web/default.conf.template:/etc/nginx/conf.d/default.conf.template:ro
-    command: >
-      sh -c "envsubst '$${APP_HOST} $${APP_PORT} $${WEB_PORT}' \
-                      < /etc/nginx/conf.d/default.conf.template \
-                      > /etc/nginx/conf.d/default.conf \
-             && nginx -g 'daemon off;'"
-    networks: 
-      - internal-network
     ports:
       - "${WEB_PORT}:${WEB_PORT}"
     depends_on:
       - app
-      
+
 volumes:
   db_data:
     name: ${COMPONENT_NAME_PREFIX}_db_data
-
-networks: 
-  internal-network:
-    name: ${COMPONENT_NAME_PREFIX}_network
