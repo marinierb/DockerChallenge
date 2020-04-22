@@ -10,6 +10,8 @@ services:
     image: ${COMPONENT_NAME_PREFIX}_db:${COMPONENT_VERSION}
     container_name: ${COMPONENT_NAME_PREFIX}_db
     env_file: .env
+    networks: 
+      - internal-network
     expose:
       - "${POSTGRES_PORT}"
     volumes:
@@ -23,6 +25,8 @@ services:
     image: ${COMPONENT_NAME_PREFIX}_app:${COMPONENT_VERSION}
     container_name: ${COMPONENT_NAME_PREFIX}_app
     env_file: .env
+    networks: 
+      - internal-network
     expose:
       - "${APP_PORT}"
     depends_on:
@@ -36,6 +40,8 @@ services:
     image: ${COMPONENT_NAME_PREFIX}_web:${COMPONENT_VERSION}
     container_name: ${COMPONENT_NAME_PREFIX}_web
     env_file: .env
+    networks: 
+      - internal-network
     ports:
       - "${WEB_PORT}:${WEB_PORT}"
     depends_on:
@@ -44,3 +50,7 @@ services:
 volumes:
   db_data:
     name: ${COMPONENT_NAME_PREFIX}_db_data
+
+networks: 
+  internal-network:
+    name: ${COMPONENT_NAME_PREFIX}_network
