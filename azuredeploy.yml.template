@@ -27,6 +27,11 @@ properties:
         value: ${POSTGRES_USER}
       - name: POSTGRES_PASSWORD
         value: ${POSTGRES_PASSWORD}
+      # - name: PGDATA
+      #   value: /var/lib/postgresql/data/pgdata
+      # volumeMounts:
+      # - name: ${COMPONENT_NAME_PREFIX}-volume
+      #   mountPath: /var/lib/postgresql/data
 
   - name: ${COMPONENT_NAME_PREFIX}-app
     properties:
@@ -78,6 +83,13 @@ properties:
     dnsNameLabel: ${AZ_CONTAINER_GROUP_DNS}
 
   imageRegistryCredentials:
-  - server: "${AZ_CONTAINER_REGISTRY_SERVER}"
-    username: "${AZ_CONTAINER_REGISTRY_NAME}"
-    password: "${acrPassword}"
+  - server: ${AZ_CONTAINER_REGISTRY_SERVER}
+    username: ${AZ_CONTAINER_REGISTRY_NAME}
+    password: ${acrPassword}
+
+  # volumes:
+  # - name: ${COMPONENT_NAME_PREFIX}-volume
+  #   azureFile:
+  #       shareName: ${AZ_FILE_SHARE_NAME}
+  #       storageAccountName: ${AZ_STORAGE_ACCOUNT_NAME}
+  #       storageAccountKey: ${storageAccountKey}

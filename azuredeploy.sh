@@ -8,6 +8,29 @@ set -a   # force export on all vars
 source .env
 set +a   # put things back the way they were
 
+## Could not get postgres to run with a mounted file share
+## The file share is mounted as root. postgresql runs as postgre
+## See https://github.com/MicrosoftDocs/azure-docs/issues/16481
+# echo "--> Create storage account for database"
+# az storage account create \
+#   --resource-group $AZ_RESOURCE_GROUP_NAME \
+#   --name $AZ_STORAGE_ACCOUNT_NAME \
+#   --location $AZ_LOCATION \
+#   --sku $AZ_STORAGE_ACCOUNT_SKU \
+#   --output none
+
+# echo "--> Create file share for database"
+# az storage share create \
+#   --name $AZ_FILE_SHARE_NAME \
+#   --account-name $AZ_STORAGE_ACCOUNT_NAME \
+#   --output none
+
+# echo "--> Get the store account key"
+# export storageAccountKey=$(az storage account keys list \
+#                         --resource-group $AZ_RESOURCE_GROUP_NAME \
+#                         --account-name $AZ_STORAGE_ACCOUNT_NAME \
+#                         --query "[0].value" --output tsv)
+
 echo "--> Create container registry"
 az acr create \
   --resource-group $AZ_RESOURCE_GROUP_NAME \
