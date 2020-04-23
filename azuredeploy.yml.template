@@ -1,0 +1,83 @@
+apiVersion: 2018-10-01
+location: ${AZ_LOCATION}
+name: ${AZ_CONTAINER_GROUP_NAME}
+type: Microsoft.ContainerInstance/containerGroups
+
+properties:
+
+  containers:
+
+  - name: ${COMPONENT_NAME_PREFIX}-db
+    properties:
+      image: ${AZ_CONTAINER_REGISTRY_SERVER}/${COMPONENT_NAME_PREFIX}_db:${COMPONENT_VERSION}
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: ${POSTGRES_PORT}
+      environmentVariables:
+      - name: POSTGRES_HOST
+        value: localhost
+      - name: POSTGRES_PORT
+        value: ${POSTGRES_PORT}
+      - name: POSTGRES_DB
+        value: ${POSTGRES_DB}
+      - name: POSTGRES_USER
+        value: ${POSTGRES_USER}
+      - name: POSTGRES_PASSWORD
+        value: ${POSTGRES_PASSWORD}
+
+  - name: ${COMPONENT_NAME_PREFIX}-app
+    properties:
+      image: ${AZ_CONTAINER_REGISTRY_SERVER}/${COMPONENT_NAME_PREFIX}_app:${COMPONENT_VERSION}
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: ${APP_PORT}
+      environmentVariables:
+      - name: APP_PORT
+        value: ${APP_PORT}
+      - name: POSTGRES_HOST
+        value: localhost
+      - name: POSTGRES_PORT
+        value: ${POSTGRES_PORT}
+      - name: POSTGRES_DB
+        value: ${POSTGRES_DB}
+      - name: POSTGRES_USER
+        value: ${POSTGRES_USER}
+      - name: POSTGRES_PASSWORD
+        value: ${POSTGRES_PASSWORD}
+
+  - name: ${COMPONENT_NAME_PREFIX}-web
+    properties:
+      image: ${AZ_CONTAINER_REGISTRY_SERVER}/${COMPONENT_NAME_PREFIX}_web:${COMPONENT_VERSION}
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: ${WEB_PORT}
+      environmentVariables:
+      - name: WEB_PORT
+        value: ${WEB_PORT}
+      - name: APP_HOST
+        value: localhost
+      - name: APP_PORT
+        value: ${APP_PORT}
+
+  osType: Linux
+  
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: ${WEB_PORT}
+    dnsNameLabel: ${AZ_CONTAINER_GROUP_DNS}
+
+  imageRegistryCredentials:
+  - server: "${AZ_CONTAINER_REGISTRY_SERVER}"
+    username: "${AZ_CONTAINER_REGISTRY_NAME}"
+    password: "${acrPassword}"
