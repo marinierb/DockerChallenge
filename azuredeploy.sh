@@ -6,34 +6,6 @@ set -a # force export on all vars - needed for envsubst
 echo "--> Source the environment file..."
 source .env
 
-echo "--> Get database password from key vault..."
-set +e # disable exit on error
-dbPassword=$(az keyvault secret show \
-          --vault-name $AZ_KEYVAULT_NAME \
-          --name $AZ_SECRET_DBPASSWORD_NAME \
-          --query value | sed 's/"//g')
-set -e # re-enable exit on error
-
-if [ "$dbPassword" ]
-then
-  echo " -- Database password found!"
-else
-  echo " -- Database password not found!"
-  echo "--> Create key vault..."
-  az keyvault create \
-    --name $AZ_KEYVAULT_NAME \
-    --resource-group $AZ_RESOURCE_GROUP_NAME \
-    --location $AZ_LOCATION \
-    --output none
-  echo "--> Create a password and put it in the vault..."
-  dbPassword=$(cat /dev/urandom | tr -dc a-zA-Z0-9 | head -c14)
-  az keyvault secret set \
-    --vault-name $AZ_KEYVAULT_NAME \
-    --name $AZ_SECRET_DBPASSWORD_NAME \
-    --value $dbPassword \
-    --output none
-fi
-
 echo "--> Create container registry..."
 az acr create \
   --resource-group $AZ_RESOURCE_GROUP_NAME \
@@ -70,6 +42,9 @@ docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_web:$COMPONEN
 #   tags=$(az acr repository show-tags -n $AZ_CONTAINER_REGISTRY_NAME --repository $rep --output tsv)
 #   echo -e "$rep\t$tags"
 # done
+
+echo "--> Generate database password..."
+dbPassword=$(cat /dev/urandom | tr -dc a-zA-Z0-9 | head -c14)
 
 echo "--> Build container group yaml file (azuredeploy.yml)..."
 envsubst < azuredeploy.yml.template >azuredeploy.yml
