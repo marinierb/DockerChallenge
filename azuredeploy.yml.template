@@ -26,7 +26,7 @@ properties:
       - name: POSTGRES_USER
         value: ${POSTGRES_USER}
       - name: POSTGRES_PASSWORD
-        value: ${POSTGRES_PASSWORD}
+        value: ${dbPassword}
 
   - name: ${COMPONENT_NAME_PREFIX}-app
     properties:
@@ -49,7 +49,7 @@ properties:
       - name: POSTGRES_USER
         value: ${POSTGRES_USER}
       - name: POSTGRES_PASSWORD
-        value: ${POSTGRES_PASSWORD}
+        value: ${dbPassword}
 
   - name: ${COMPONENT_NAME_PREFIX}-web
     properties:

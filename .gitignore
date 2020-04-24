@@ -1,6 +1,6 @@
-.env
-t
-azure
 .vscode
-azuredeploy.yml
+t
 tt
+azure
+azuredeploy.yml
+.secrets
