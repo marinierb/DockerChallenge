@@ -76,15 +76,15 @@ http://brunotestapp.canadacentral.azurecontainer.io//app | Hits the *app* endpoi
 http://brunotestapp.canadacentral.azurecontainer.io//users | Hits the *users* endpoint which lists the users in the database
 
 
->**Note**\
+Note
 >Could not get postgres to run with a mounted file share.\
 >The file share is mounted as root. postgresql runs as postgres.\
->See https://github.com/MicrosoftDocs/azure-docs/issues/16481\
+>See https://github.com/MicrosoftDocs/azure-docs/issues/16481 \
 >So... no persistent storage for the database!\
 >On to part 3 then...
 
 ## Part 3 - No containers - Deploy the app to App and DB services (PaaS)
 
-* TBD
+* To do
 
 ## That's it!
