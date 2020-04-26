@@ -4,15 +4,12 @@ server {
   index  index.html;
 
   location /app {
-    resolver 127.0.0.1 valid=30s;
     proxy_pass http://${APP_HOST}:${APP_PORT}/app;
   }
   location /users {
-    resolver 127.0.0.1 valid=30s;
     proxy_pass http://${APP_HOST}:${APP_PORT}/users;
   }
   location /dbadmin {
-    resolver 127.0.0.1 valid=30s;
     proxy_pass http://${ADMINER_HOST}:${ADMINER_PORT};
   }
 }

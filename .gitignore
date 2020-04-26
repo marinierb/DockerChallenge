@@ -5,3 +5,5 @@ azure
 azuredeploy.yml
 .secrets
 clean
+app/node_modules
+app/package-lock.json
