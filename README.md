@@ -31,6 +31,7 @@ URL | Action
 http://localhost | Hits the nginx default page
 http://localhost/app | Hits the *app* endpoint
 http://localhost/users | Hits the *users* endpoint which lists the users in the database
+http://localhost/dbadminusers | Hits the *adminer* endpoint which redirects to the adminer server
 
 ## Part 2 - Deploy it to an Azure Container Group (IaaS)
 
@@ -51,6 +52,7 @@ URL | Action
 http://brunotestapp.canadacentral.azurecontainer.io/ | Hits the nginx default page
 http://brunotestapp.canadacentral.azurecontainer.io/app | Hits the *app* endpoint
 http://brunotestapp.canadacentral.azurecontainer.io/users | Hits the *users* endpoint which lists the users in the database
+http://brunotestapp.canadacentral.azurecontainer.io/dbadmin | Hits the *adminer* endpoint which redirects to the adminer server
 
 
 Note

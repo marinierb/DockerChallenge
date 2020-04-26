@@ -2,6 +2,15 @@ version: "3.7"
 
 services:
 
+  adminer:
+    image: adminer
+    container_name: ${COMPONENT_NAME_PREFIX}_adminer
+    restart: always
+    networks: 
+      - internal-network
+    expose:
+      - ${ADMINER_PORT}
+
   db:
     build:
       context: ./db
@@ -52,9 +61,11 @@ services:
     container_name: ${COMPONENT_NAME_PREFIX}_web
     environment:
       - WEB_PORT=${WEB_PORT}
+      - ADMINER_HOST=${ADMINER_HOST}
+      - ADMINER_PORT=${ADMINER_PORT}
       - APP_HOST=${APP_HOST}
       - APP_PORT=${APP_PORT}
-    networks: 
+    networks:
       - internal-network
     ports:
       - "${WEB_PORT}:${WEB_PORT}"

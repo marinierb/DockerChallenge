@@ -7,6 +7,16 @@ properties:
 
   containers:
 
+  - name: ${COMPONENT_NAME_PREFIX}-adminer
+    properties:
+      image: adminer
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+        - port: ${ADMINER_PORT}
+
   - name: ${COMPONENT_NAME_PREFIX}-db
     properties:
       image: ${AZ_CONTAINER_REGISTRY_SERVER}/${COMPONENT_NAME_PREFIX}_db:${COMPONENT_VERSION}
@@ -61,6 +71,10 @@ properties:
       ports:
       - port: ${WEB_PORT}
       environmentVariables:
+      - name: ADMINER_HOST
+        value: localhost
+      - name: ADMINER_PORT
+        value: ${ADMINER_PORT}
       - name: WEB_PORT
         value: ${WEB_PORT}
       - name: APP_HOST
