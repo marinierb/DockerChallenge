@@ -10,10 +10,17 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
+
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: Get db password from vault
+    keyVaultName: $AZ_KEYVAULT_NAME
+    secretsFilter: $AZ_SECRET_DBPASSWORD_NAME
+
+- script: echo dbPassword=$dbPassword
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+# - script: |
+#     echo Add other tasks to build, test, and deploy your project.
+#     echo See https://aka.ms/yaml
+#   displayName: 'Run a multi-line script'
