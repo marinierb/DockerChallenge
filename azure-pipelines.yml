@@ -14,8 +14,8 @@ steps:
 - task: AzureKeyVault@1
   inputs:
     azureSubscription: Get db password from vault
-    keyVaultName: $AZ_KEYVAULT_NAME
-    secretsFilter: $AZ_SECRET_DBPASSWORD_NAME
+    keyVaultName: EsSCRaPKv
+    secretsFilter: dbPassword
 
 - script: echo dbPassword=$dbPassword
   displayName: 'Run a one-line script'
