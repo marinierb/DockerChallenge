@@ -1,7 +1,4 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# docker-compose pipeline
 
 trigger:
 - master
@@ -31,7 +28,8 @@ variables:
   azureSubscriptionEndpoint: EsSSub
   azureContainerRegistry: brunoacr.azurecr.io
 
-task: DockerCompose@0
+steps:
+- task: DockerCompose@0
   displayName: DockerCompose task
   inputs:
     action: Build services
