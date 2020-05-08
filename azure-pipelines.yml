@@ -25,7 +25,7 @@ variables:
   NGINX_IMAGE: nginx:1.17.9-alpine
   WEB_PORT: 80
   # azure
-  azureSubscriptionEndpoint: EsSSub
+  azureSubscriptionEndpoint: brunoCredentials
   azureContainerRegistry: brunoacr.azurecr.io
 
 steps:
