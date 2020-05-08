@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/BrunoMarinier/Test/_apis/build/status/marinierb.DockerChallenge?branchName=master)](https://dev.azure.com/BrunoMarinier/Test/_build/latest?definitionId=1&branchName=master)
+
 # DockerChallenge
 
 This is a three tier app (web, app, db) created as a learning exercise.
