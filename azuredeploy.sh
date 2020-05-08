@@ -6,14 +6,14 @@ set -a # force export on all vars - needed for envsubst
 echo "--> Source the environment file..."
 source .env
 
-echo "--> Create container registry..."
+echo "--> Create container registry $AZ_CONTAINER_REGISTRY_NAME..."
 az acr create \
   --resource-group $AZ_RESOURCE_GROUP_NAME \
   --name $AZ_CONTAINER_REGISTRY_NAME \
   --sku $AZ_SKU \
   --output none
 
-echo "--> Enable admin on container registry..."
+echo "--> Enable admin on container registry $AZ_CONTAINER_REGISTRY_NAME..."
 az acr update \
   --name $AZ_CONTAINER_REGISTRY_NAME \
   --admin-enabled true \
