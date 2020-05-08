@@ -24,17 +24,14 @@ variables:
   # web
   NGINX_IMAGE: nginx:1.17.9-alpine
   WEB_PORT: 80
-  # azure
-  azureSubscriptionEndpoint: EsSCRaPServiceConnection
-  azureContainerRegistry: brunoacr.azurecr.io
 
 steps:
 - task: DockerCompose@0
   displayName: DockerCompose task
   inputs:
     action: Build services
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureContainerRegistry: $(azureContainerRegistry)
+    azureSubscriptionEndpoint: EsSCRaPServiceConnection
+    azureContainerRegistry: brunoacr.azurecr.io
     dockerComposeFile: docker-compose.no.local.images.yml
 #    projectName: $(Build.Repository.Name)
 #    qualifyImageNames: true
