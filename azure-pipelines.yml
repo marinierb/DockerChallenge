@@ -29,7 +29,7 @@ steps:
 - task: DockerCompose@0
   displayName: DockerCompose task
   inputs:
-    action: Build services
+    action: Push services
     containerregistrytype: Azure Container Registry
     azureSubscriptionEndpoint: EsSCRaPServiceConnection
     azureContainerRegistry: brunoacr.azurecr.io
