@@ -29,10 +29,11 @@ steps:
 - task: DockerCompose@0
   displayName: DockerCompose task
   inputs:
-    action: Run services
+    action: Build services
+    containerregistrytype: Azure Container Registry
     azureSubscriptionEndpoint: EsSCRaPServiceConnection
     azureContainerRegistry: brunoacr.azurecr.io
-    dockerComposeFile: docker-compose.no.local.images.yml
+    dockerComposeFile: docker-compose.yml
 #    projectName: $(Build.Repository.Name)
 #    qualifyImageNames: true
 #    additionalImageTags: $(Build.BuildId)
