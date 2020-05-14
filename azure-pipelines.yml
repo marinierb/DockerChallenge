@@ -30,9 +30,9 @@ steps:
    displayName: DockerCompose task
    inputs:
      action: Build services
-#     containerregistrytype: Azure Container Registry
-#     azureSubscriptionEndpoint: EsSCRaPServiceConnection
-#     azureContainerRegistry: brunoacr.azurecr.io
+     containerregistrytype: Azure Container Registry
+     azureSubscriptionEndpoint: EsSCRaPServiceConnection
+     azureContainerRegistry: brunoacr.azurecr.io
      dockerComposeFile: docker-compose.yml
 - task: DockerCompose@0
   displayName: DockerCompose task
