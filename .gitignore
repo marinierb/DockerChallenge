@@ -7,3 +7,4 @@ azuredeploy.yml
 clean
 app/node_modules
 app/package-lock.json
+docker-compose.local.images.yml
