@@ -24,21 +24,38 @@ variables:
   # web
   NGINX_IMAGE: nginx:1.17.9-alpine
   WEB_PORT: 80
+  # azure
+  azureSubscriptionEndpoint: EsSCRaPServiceConnection
+  azureContainerRegistry: $(azureContainerRegistry)
+  serviceName: bruno
+  servicePort: 80
 
 steps:
 - task: DockerCompose@0
-  displayName: DockerCompose task
+  displayName: Build
   inputs:
     action: Build services
     containerregistrytype: Azure Container Registry
-    azureSubscriptionEndpoint: EsSCRaPServiceConnection
-    azureContainerRegistry: brunoacr.azurecr.io
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
     dockerComposeFile: docker-compose.yml
 - task: DockerCompose@0
-  displayName: DockerCompose task
+  displayName: Push
   inputs:
     action: Push services
     containerregistrytype: Azure Container Registry
-    azureSubscriptionEndpoint: EsSCRaPServiceConnection
-    azureContainerRegistry: brunoacr.azurecr.io
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
     dockerComposeFile: docker-compose.yml
+- task: DockerCompose@0
+  displayName: Run
+  inputs:
+    action: Run a specific service
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
+    dockerComposeFile: docker-compose.yml
+    projectName: $(Build.Repository.Name)
+    qualifyImageNames: true
+    serviceName: $(serviceName)
+    ports: $(servicePort)
+    detached: true
