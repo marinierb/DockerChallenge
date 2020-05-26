@@ -1,0 +1,52 @@
+# docker-compose pipeline
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  COMPONENT_NAME_PREFIX: bruno
+  COMPONENT_VERSION: v1.0.0
+  # adminer
+  ADMINER_IMAGE: adminer:4.7.6-standalone
+  ADMINER_PORT: 8080
+  # db
+  POSTGRES_IMAGE: library/postgres:12.2-alpine
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: docker
+  POSTGRES_USER: docker
+  POSTGRES_PASSWORD: docker
+  # app
+  NODE_IMAGE: node:13.12.0-alpine3.11
+  APP_PORT: 3000
+  # web
+  NGINX_IMAGE: nginx:1.17.9-alpine
+  WEB_PORT: 80
+  # azure
+  azureSubscriptionEndpoint: EsSCRaPServiceConnection
+  azureContainerRegistry: brunoacr.azurecr.io
+  serviceName: bruno
+  servicePort: 80
+
+steps:
+- task: DockerCompose@0
+  displayName: Build
+  inputs:
+    action: Build services
+    containerregistrytype: Azure Container Registry
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
+    dockerComposeFile: docker-compose.yml
+- task: DockerCompose@0
+  displayName: Push
+  inputs:
+    action: Push services
+    containerregistrytype: Azure Container Registry
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
+    dockerComposeFile: docker-compose.yml
+- task: ShellScript@2
+  inputs:
+    scriptPath: azuredeploy.sh

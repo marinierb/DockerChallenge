@@ -1,0 +1,97 @@
+apiVersion: 2018-10-01
+location: canadacentral
+name: brunoContainerGroup
+type: Microsoft.ContainerInstance/containerGroups
+
+properties:
+
+  containers:
+
+  - name: bruno-adminer
+    properties:
+      image: adminer
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+        - port: 8080
+
+  - name: bruno-db
+    properties:
+      image: brunoAcr.azurecr.io/bruno_db:v1.0.0
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: 5432
+      environmentVariables:
+      - name: POSTGRES_HOST
+        value: localhost
+      - name: POSTGRES_PORT
+        value: 5432
+      - name: POSTGRES_DB
+        value: docker
+      - name: POSTGRES_USER
+        value: docker
+      - name: POSTGRES_PASSWORD
+        value: docker
+
+  - name: bruno-app
+    properties:
+      image: brunoAcr.azurecr.io/bruno_app:v1.0.0
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: 3000
+      environmentVariables:
+      - name: APP_PORT
+        value: 3000
+      - name: POSTGRES_HOST
+        value: localhost
+      - name: POSTGRES_PORT
+        value: 5432
+      - name: POSTGRES_DB
+        value: docker
+      - name: POSTGRES_USER
+        value: docker
+      - name: POSTGRES_PASSWORD
+        value: docker
+
+  - name: bruno-web
+    properties:
+      image: brunoAcr.azurecr.io/bruno_web:v1.0.0
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: 80
+      environmentVariables:
+      - name: ADMINER_HOST
+        value: localhost
+      - name: ADMINER_PORT
+        value: 8080
+      - name: WEB_PORT
+        value: 80
+      - name: APP_HOST
+        value: localhost
+      - name: APP_PORT
+        value: 3000
+
+  osType: Linux
+  
+  ipAddress:
+    type: Public
+    ports:
+    - protocol: tcp
+      port: 80
+    dnsNameLabel: brunotestapp
+
+  imageRegistryCredentials:
+  - server: brunoAcr.azurecr.io
+    username: brunoAcr
+    password: eC3q3E+wZTg7yOOFYV69Ug4x3tKnbkSR
