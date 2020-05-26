@@ -47,6 +47,15 @@ steps:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureContainerRegistry: $(azureContainerRegistry)
     dockerComposeFile: docker-compose.yml
-- task: ShellScript@2
+- task: DockerCompose@0
+  displayName: Run
   inputs:
-    scriptPath: azuredeploy.sh
+    action: Run a specific service
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
+    dockerComposeFile: docker-compose.yml
+    projectName: $(Build.Repository.Name)
+    qualifyImageNames: true
+    serviceName: $(serviceName)
+    ports: $(servicePort)
+    detached: true
