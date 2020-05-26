@@ -47,12 +47,12 @@ docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_web:$COMPONEN
 # dbPassword=$(cat /dev/urandom | tr -dc a-zA-Z0-9 | head -c14)
 
 echo "--> Build container group yaml file (azuredeploy.yml)..."
-envsubst < azuredeploy.yml.template >azuredeploy.yml
+envsubst < azureContainerDeploy.yml.template >azureContainerDeploy.yml
 
 echo "--> Create container group..."
 az container create  \
   --resource-group $AZ_RESOURCE_GROUP_NAME \
-  --file azuredeploy.yml \
+  --file azureContainerDeploy.yml \
   --output none
 
 echo "--> Check messages..."
