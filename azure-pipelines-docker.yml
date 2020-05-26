@@ -56,6 +56,4 @@ steps:
     dockerComposeFile: docker-compose.yml
     projectName: $(Build.Repository.Name)
     qualifyImageNames: true
-    serviceName: $(serviceName)
-    ports: $(servicePort)
     detached: true
