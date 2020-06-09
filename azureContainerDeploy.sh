@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ "$1" == "nopush" ] && nopush=1
+
 set -e # exit as soon as a command fails
 set -a # force export on all vars - needed for envsubst
 
@@ -25,17 +27,19 @@ export acrPassword=$(az acr credential show \
                   --query "passwords[0].value"  \
                   | sed 's/"//g')
 
-echo "--> Push images to container registry..."
-docker login $AZ_CONTAINER_REGISTRY_NAME.azurecr.io --username $AZ_CONTAINER_REGISTRY_NAME --password $acrPassword
-echo " -- Tag images"
-docker tag ${COMPONENT_NAME_PREFIX}_db:$COMPONENT_VERSION  $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_db:$COMPONENT_VERSION
-docker tag ${COMPONENT_NAME_PREFIX}_app:$COMPONENT_VERSION $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_app:$COMPONENT_VERSION
-docker tag ${COMPONENT_NAME_PREFIX}_web:$COMPONENT_VERSION $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_web:$COMPONENT_VERSION
-echo " -- Push images"
-docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_db:$COMPONENT_VERSION
-docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_app:$COMPONENT_VERSION
-docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_web:$COMPONENT_VERSION
-
+if [ ! "$nopush" ]
+then
+  echo "--> Push images to container registry..."
+  docker login $AZ_CONTAINER_REGISTRY_NAME.azurecr.io --username $AZ_CONTAINER_REGISTRY_NAME --password $acrPassword
+  echo " -- Tag images"
+  docker tag ${COMPONENT_NAME_PREFIX}_db:$COMPONENT_VERSION  $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_db:$COMPONENT_VERSION
+  docker tag ${COMPONENT_NAME_PREFIX}_app:$COMPONENT_VERSION $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_app:$COMPONENT_VERSION
+  docker tag ${COMPONENT_NAME_PREFIX}_web:$COMPONENT_VERSION $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_web:$COMPONENT_VERSION
+  echo " -- Push images"
+  docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_db:$COMPONENT_VERSION
+  docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_app:$COMPONENT_VERSION
+  docker push $AZ_CONTAINER_REGISTRY_SERVER/${COMPONENT_NAME_PREFIX}_web:$COMPONENT_VERSION
+fi
 # echo "--> List container registry contents"
 # for rep in $(az acr repository list -n $AZ_CONTAINER_REGISTRY_NAME --output tsv)
 # do

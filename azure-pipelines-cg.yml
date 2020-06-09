@@ -38,3 +38,4 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'scriptPath'
     scriptPath: 'azureContainerDeploy.sh'
+    arguments: 'nopush'
