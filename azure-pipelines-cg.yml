@@ -33,6 +33,6 @@ variables:
 steps:
 - task: CmdLine@2
   inputs:
-    script: azureContainerDeploy.sh 
+    script: ./azureContainerDeploy.sh 
     #workingDirectory: # Optional
     #failOnStderr: false # Optional
