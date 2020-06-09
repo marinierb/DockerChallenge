@@ -94,4 +94,4 @@ properties:
   imageRegistryCredentials:
   - server: brunoAcr.azurecr.io
     username: brunoAcr
-    password: whZ8+knWR398IF2taBy4n9Cq5Dkmgnqa
+    password: dOvxDz=o2Jock4tymkYDTxtDXXSHZhrE

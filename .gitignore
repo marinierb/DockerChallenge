@@ -3,3 +3,4 @@ t
 .stuff
 app/node_modules
 app/package-lock.json
+azureContainerDeploy.yml

@@ -43,7 +43,7 @@ http://localhost/dbadminusers | Hits the *adminer* endpoint which redirects to t
 
 3 - Run the deploy script
 
-    ./azuredeploy.sh
+    ./azureContainerDeploy.sh
 
 4 - Test it - adjust the URL as per the AZ_CONTAINER_GROUP_DNS value
 
