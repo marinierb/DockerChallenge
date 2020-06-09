@@ -33,7 +33,7 @@ http://localhost/dbadminusers | Hits the *adminer* endpoint which redirects to t
 
 ## Part 2 - Deploy it to an Azure Container Group (IaaS)
 
-:warning: This part uses the images created in step 1. So don't delete them! 
+**:warning: This part uses the images created in step 1. So don't delete them!**
 
 1 - Adjust the contents of the **.env** file to your preferences - the **azure** stuff only at this point
 
@@ -54,19 +54,21 @@ http://brunotestapp.canadacentral.azurecontainer.io/app | Hits the *app* endpoin
 http://brunotestapp.canadacentral.azurecontainer.io/users | Hits the *users* endpoint which lists the users in the database
 http://brunotestapp.canadacentral.azurecontainer.io/dbadmin | Hits the *adminer* endpoint which redirects to the adminer server
 
-## Part 3 - Redo part 3 but with a pipeline
+## Part 3 - Build and deploy to an Azure Container Group (IaaS) with a pipeline
 
-This means doing all steps on the Cloud - Build the images, push them to the repository and create the container group
+**:warning: This part uses the container registry created in step 2. So don't delete it!**
 
-1 - Create a pipeline in Azure that is connected to this github repository.
+1 - To confirm that this works, go to Azure and delete the Container Group
 
-2 - Ensure that the pipeline is set to run the proper pipeline. In the pipeline settings, set:
+2 - Create a pipeline in Azure that is connected to this github repository
 
-    YAML file path: azure-pipelines-docker.yml
+3 - Ensure that the pipeline is set to run the proper pipeline. In the pipeline settings, set:
 
-3 - Push a commit to the repo or just run the pipeline
+    YAML file path: azure-pipelines-cg.yml
 
-4 - Test it - adjust the URL as per the AZ_CONTAINER_GROUP_DNS value
+4 - Push a commit to the repo or just run the pipeline
+
+5 - Test it - adjust the URL as per the AZ_CONTAINER_GROUP_DNS value
 
 URL | Action
 --- | ---
